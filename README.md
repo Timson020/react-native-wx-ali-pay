@@ -2,15 +2,13 @@
 > react-native版 微信支付，支付宝 插件
 > 本插件基于 [xiaozhicheng/react-native-pay](https://github.com/xiaozhicheng/react-native-pay) 做了bug修补
 
-___请勿使用在生产环境上，本仓库处于开发，调试状态___
-
 # Link
 
+## CMD
+react-native link react-native-wx-ali-pay
+
 ##  Android
->android/app/src/main/java/xxx/MainApplication.java
-```
-import com.reactmodule.PayPackage
-```
+>none
 
 ## iOS
 ### Step1
