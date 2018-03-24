@@ -1,0 +1,39 @@
+{
+  "name": "react-native-wx-ali-pay",
+  "version": "0.1.0",
+  "description": "react-native: 支付宝，微信支付",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {
+    "jest": "^20.0.4",
+    "react-test-renderer": "^16.0.0-alpha.12",
+    "babel-jest": "^20.0.3",
+    "babel-preset-react-native": "^2.0.1"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*"
+  },
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/timson020/react-native-wx-ali-pay.git"
+  },
+  "keywords": [
+    "支付宝",
+    "微信",
+    "支付",
+    "react-native",
+    "pay",
+    "react-native-pay"
+  ],
+  "author": {
+    "name": "Timson",
+    "email": "516180119@qq.com"
+  },
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/timson020/react-native-wx-ali-pay/issues"
+  },
+  "homepage": "https://github.com/timson020/react-native-wx-ali-pay#readme"
+}
