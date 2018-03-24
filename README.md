@@ -5,7 +5,9 @@
 # Link
 
 ## CMD
+```
 react-native link react-native-wx-ali-pay
+```
 
 ##  Android
 >none
@@ -20,7 +22,7 @@ react-native link react-native-wx-ali-pay
 ### Step3
 在工程target的```Build Settings```-> ```Frameworks Search Paths``` -> 加入```"$(SRCROOT)/../node_modules/react-native-wx-ali-pay/ios/PaySdk/支付宝"```
 
-### Step4
+### Step4(可忽略-增强稳定性)
 #### AppDegelate.m
 >添加文件添加内容
 ```
@@ -56,3 +58,8 @@ Pay.onWxPay(wxObj).then(e => console.info(e)).catch(err => alert(err))
 
 Pay.onAliPay(aliObj).then(e => console.info(e)).catch(err => alert(err))
 ```
+
+#  Contributor
+[OYWeijian](https://github.com/OYWeijian)
+<!-- This project exists thanks to all the people who contribute. [[Contribute]](CONTRIBUTING.md). -->
+<!-- ![](https://avatars3.githubusercontent.com/u/15721842?s=460&v=4 OYWeijian) -->
