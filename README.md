@@ -36,7 +36,7 @@ import "WXApi.h"
 if ([url.host isEqualToString:@"safepay"]) { //支付宝回调 ...//添加回调方法 return YES; }else{ //微信回调 return [WXApi handleOpenURL:url delegate:[WXApiManager sharedManager]]; } }
 ```
 
-# Use
+# Usage
 ```
 import Pay from 'react-native-wx-ali-pay'
 
@@ -54,12 +54,19 @@ const aliObj = {
 	orderString: ''
 }
 
-Pay.onWxPay(wxObj).then(e => console.info(e)).catch(err => alert(err))
+Pay.onWxPay(wxObj).then(e => console.info(e))
 
-Pay.onAliPay(aliObj).then(e => console.info(e)).catch(err => alert(err))
+Pay.onAliPay(aliObj).then(e => console.info(e))
+
+// or 
+let wxRes = await Pay.onWxPay(wxObj)
+if (wxRes.code != 200) return alert(wxRes.msg)
+// do something 
+
+let aliRes = await Pay.onAliPay(aliObj)
+if (aliRes.code != 200) return return alert(aliRes.msg)
+// do something 
 ```
 
 #  Contributor
 [OYWeijian](https://github.com/OYWeijian)
-<!-- This project exists thanks to all the people who contribute. [[Contribute]](CONTRIBUTING.md). -->
-<!-- ![](https://avatars3.githubusercontent.com/u/15721842?s=460&v=4 OYWeijian) -->

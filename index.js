@@ -7,26 +7,27 @@ const Pay = {
 	onWxPay,
 }
 
-async function onAliPay(url = '') {
+async function onAliPay(url) {
 	const orderString = url
 	let res = null
-	if (!url) return Promise.reject('请输入正确的连接')
+	if (!url) return Promise.resolve({ code: 400, msg: 'illegal string' })
 	try {
 		res = await NativeModules.RNWxAliPay.onAliPay(iOS ? { orderString } : url)
-		return Promise.resolve(res)
+		return Promise.resolve({ code: 200, data: res })
 	} catch (err) {
-		return Promise.reject(err)
+		return Promise.resolve({ code: 400, msg: err })
 	}
 }
 
 async function onWxPay(wxObj) {
 	let res = null
+	if (!wxObj) Promise.resolve({ code: 400, data: 'illegal object' })
 	try {
 		res = await NativeModules.RNWxAliPay.onWxPay(wxObj)
+		return Promise.resolve({ code: 200, data: res })
 	} catch (err) {
-		res = { code: 401, msg: err }
+		return Promise.resolve({ code: 401, msg: err })
 	}
-	return res	
 }
 
 export default Pay
