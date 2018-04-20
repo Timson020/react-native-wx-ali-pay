@@ -26,6 +26,7 @@ react-native link react-native-wx-ali-pay
 在工程target的```Build Settings```-> ```Header Search Paths``` -> 加入```"$(SRCROOT)/../node_modules/react-native-wx-ali-pay/ios/PaySdk"```,并将状态修改为```recursive```
 #### AppDegelate.m
 >添加文件添加内容
+
 ```
 #import <WXApi.h>
 #import <WXApiManager.h>
@@ -51,7 +52,7 @@ return result;
 }
 ```
 
-# Use
+# Useage
 ```
 import Pay from 'react-native-wx-ali-pay'
 

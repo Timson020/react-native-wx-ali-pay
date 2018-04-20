@@ -1,6 +1,6 @@
 {
   "name": "react-native-wx-ali-pay",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "react-native: 支付宝，微信支付",
   "main": "index.js",
   "dependencies": {},
