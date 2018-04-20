@@ -25,7 +25,7 @@ react-native link react-native-wx-ali-pay
 ### Step4
 在工程target的```Build Settings```-> ```Header Search Paths``` -> 加入```"$(SRCROOT)/../node_modules/react-native-wx-ali-pay/ios/PaySdk"```,并将状态修改为```recursive```
 #### AppDegelate.m
->添加文件添加内容
+>添加文件添加内容 --- 下面的减函数
 
 ```
 #import <WXApi.h>
@@ -34,21 +34,14 @@ react-native link react-native-wx-ali-pay
 // 支持所有iOS系统
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
 {
-//6.3的新的API调用，是为了兼容国外平台(例如:新版facebookSDK,VK等)的调用[如果用6.2的api调用会没有回调],对国内平台没有影响
-BOOL result = [[UMSocialManager defaultManager] handleOpenURL:url sourceApplication:sourceApplication annotation:annotation];
-if (!result) {
-// 其他如支付等SDK的回调
-if ([url.host isEqualToString:@"safepay"]) {
-//支付宝回调 ...
-//添加回调方法
-return YES;
-}
-else {
-//微信回调
-return [WXApi handleOpenURL:url delegate:[WXApiManager sharedManager]];
-}
-}
-return result;
+  if ([url.host isEqualToString:@"safepay"]) {
+    //支付宝回调 ...
+    //添加回调方法
+    return YES;
+  } else {
+    //微信回调
+    return [WXApi handleOpenURL:url delegate:[WXApiManager sharedManager]];
+  }
 }
 ```
 
