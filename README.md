@@ -22,21 +22,36 @@ react-native link react-native-wx-ali-pay
 ### Step3
 在工程target的```Build Settings```-> ```Frameworks Search Paths``` -> 加入```"$(SRCROOT)/../node_modules/react-native-wx-ali-pay/ios/PaySdk/支付宝"```
 
-### Step4(可忽略-增强稳定性)
+### Step4
+在工程target的```Build Settings```-> ```Header Search Paths``` -> 加入```"$(SRCROOT)/../node_modules/react-native-wx-ali-pay/ios/PaySdk"```,并将状态修改为```recursive```
 #### AppDegelate.m
 >添加文件添加内容
 ```
-import "WXApi.h"
-....
+#import <WXApi.h>
+#import <WXApiManager.h>
 
-(BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url { if ([url.host isEqualToString:@"safepay"]) { //支付宝回调 ...//添加回调方法 return YES; }else{ return [WXApi handleOpenURL:url delegate:[WXApiManager sharedManager]]; }}
-
-(BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
-
-if ([url.host isEqualToString:@"safepay"]) { //支付宝回调 ...//添加回调方法 return YES; }else{ //微信回调 return [WXApi handleOpenURL:url delegate:[WXApiManager sharedManager]]; } }
+// 支持所有iOS系统
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
+{
+//6.3的新的API调用，是为了兼容国外平台(例如:新版facebookSDK,VK等)的调用[如果用6.2的api调用会没有回调],对国内平台没有影响
+BOOL result = [[UMSocialManager defaultManager] handleOpenURL:url sourceApplication:sourceApplication annotation:annotation];
+if (!result) {
+// 其他如支付等SDK的回调
+if ([url.host isEqualToString:@"safepay"]) {
+//支付宝回调 ...
+//添加回调方法
+return YES;
+}
+else {
+//微信回调
+return [WXApi handleOpenURL:url delegate:[WXApiManager sharedManager]];
+}
+}
+return result;
+}
 ```
 
-# Usage
+# Use
 ```
 import Pay from 'react-native-wx-ali-pay'
 
@@ -54,19 +69,12 @@ const aliObj = {
 	orderString: ''
 }
 
-Pay.onWxPay(wxObj).then(e => console.info(e))
+Pay.onWxPay(wxObj).then(e => console.info(e)).catch(err => alert(err))
 
-Pay.onAliPay(aliObj).then(e => console.info(e))
-
-// or 
-let wxRes = await Pay.onWxPay(wxObj)
-if (wxRes.code != 200) return alert(wxRes.msg)
-// do something 
-
-let aliRes = await Pay.onAliPay(aliObj)
-if (aliRes.code != 200) return return alert(aliRes.msg)
-// do something 
+Pay.onAliPay(aliObj).then(e => console.info(e)).catch(err => alert(err))
 ```
 
 #  Contributor
 [OYWeijian](https://github.com/OYWeijian)
+<!-- This project exists thanks to all the people who contribute. [[Contribute]](CONTRIBUTING.md). -->
+<!-- ![](https://avatars3.githubusercontent.com/u/15721842?s=460&v=4 OYWeijian) -->

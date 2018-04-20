@@ -50,9 +50,10 @@ RCT_EXPORT_METHOD(onWxPay:(NSDictionary *)info resolver:(RCTPromiseResolveBlock)
     }
     
     
-    [WXApi registerApp:[info valueForKey:@"appid"]];
     
-    [WXPay pay:info success:^(NSDictionary *resultDic, NSString *message) {
+    [WXApi registerApp:[[info objectForKey:@"payStr"] objectForKey:@"appid"]];
+    
+    [WXPay pay:[info objectForKey:@"payStr"] success:^(NSDictionary *resultDic, NSString *message) {
         resolve(@"支付成功");
     } failure:^(NSDictionary *resultDic, NSString *message) {
         reject(@"", message,nil);
