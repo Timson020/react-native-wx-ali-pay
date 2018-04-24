@@ -11,14 +11,21 @@
 #import "WXApi.h"
 #import "WXPay.h"
 
-@implementation RNWxAliPay
+@implementation RNWxAliPay{
+    RCTPromiseResolveBlock _resolveBlock;
+    RCTPromiseRejectBlock _rejectBlock;
+}
 
 RCT_EXPORT_MODULE();
 
 RCT_EXPORT_METHOD(onAliPay:(NSDictionary *)orderString  resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject) {
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(aliPayReslut:) name:@"aliPayReslut" object:nil];
+    _resolveBlock = resolve;
+    _rejectBlock = reject;
+    
     NSString *orderStr = orderString[@"orderString"];
-    NSLog(@"%@", orderStr);
+    
     // NOTE: 调用支付结果开始支付
     if (orderStr != nil)    {
         
@@ -49,15 +56,28 @@ RCT_EXPORT_METHOD(onWxPay:(NSDictionary *)info resolver:(RCTPromiseResolveBlock)
         return;
     }
     
-    
-    
-    [WXApi registerApp:[[info objectForKey:@"payStr"] objectForKey:@"appid"]];
-    
-    [WXPay pay:[info objectForKey:@"payStr"] success:^(NSDictionary *resultDic, NSString *message) {
+    [WXApi registerApp:[info objectForKey:@"appid"]];
+
+    [WXPay pay:info success:^(NSDictionary *resultDic, NSString *message) {
         resolve(@"支付成功");
     } failure:^(NSDictionary *resultDic, NSString *message) {
         reject(@"", message,nil);
     }];
+}
+
+-(void)aliPayReslut:(NSNotification *)resultDic{
+    
+    //支付回调
+    NSString *resultStatus = [resultDic.userInfo objectForKey:@"resultStatus"];
+    if ([resultStatus isEqualToString:@"9000"]){ //订单支付成功
+        _resolveBlock(@"支付成功");
+    }else if([resultStatus isEqualToString:@"6002"]){//网络错误
+        _rejectBlock(resultStatus,@"网络错误",nil);
+    }else if([resultStatus isEqualToString:@"6001"]){//中途取消
+        _rejectBlock(resultStatus,@"取消支付",nil);
+    }else{//处理失败
+        _rejectBlock(resultStatus,@"支付失败",nil);
+    }
 }
 
 @end

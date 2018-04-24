@@ -24,12 +24,18 @@ react-native link react-native-wx-ali-pay
 
 ### Step4
 在工程target的```Build Settings```-> ```Header Search Paths``` -> 加入```"$(SRCROOT)/../node_modules/react-native-wx-ali-pay/ios/PaySdk"```,并将状态修改为```recursive```
+
+### Step5
+在工程target的```Info```-> ```URL Types``` -> 点左下角'+'新增一项并将```URL Schemes"```修改为```tessWXPay```
+
 #### AppDegelate.m
 >添加文件添加内容
 ```
 #import <WXApi.h>
 #import <WXApiManager.h>
+#import <AlipaySDK/AlipaySDK.h>
 
+// 支持所有iOS系统
 // 支持所有iOS系统
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
 {
@@ -40,9 +46,11 @@ if (!result) {
 if ([url.host isEqualToString:@"safepay"]) {
 //支付宝回调 ...
 //添加回调方法
+[[AlipaySDK defaultService]processOrderWithPaymentResult:url standbyCallback:^(NSDictionary *resultDic) {
+[[NSNotificationCenter defaultCenter]postNotificationName:@"aliPayReslut" object:nil userInfo:resultDic];
+}];
 return YES;
-}
-else {
+} else {
 //微信回调
 return [WXApi handleOpenURL:url delegate:[WXApiManager sharedManager]];
 }
