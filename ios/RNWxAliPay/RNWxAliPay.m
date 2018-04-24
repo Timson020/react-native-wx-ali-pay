@@ -55,9 +55,8 @@ RCT_EXPORT_METHOD(onWxPay:(NSDictionary *)info resolver:(RCTPromiseResolveBlock)
         reject(@"-1", @"请先安装微信客户端", nil);
         return;
     }
-    
-    [WXApi registerApp:[info objectForKey:@"appid"]];
 
+    [WXApi registerApp:[info objectForKey:@"appid"]];
     [WXPay pay:info success:^(NSDictionary *resultDic, NSString *message) {
         resolve(@"支付成功");
     } failure:^(NSDictionary *resultDic, NSString *message) {

@@ -22,6 +22,7 @@ async function onAliPay(url) {
 async function onWxPay(wxObj) {
 	let res = null
 	if (!wxObj) Promise.resolve({ code: 400, data: 'illegal object' })
+	iOS ? null : (typeof wxObj.timestamp != 'string' ? wxObj.timestamp.toString() : null )
 	try {
 		res = await NativeModules.RNWxAliPay.onWxPay(wxObj)
 		return Promise.resolve({ code: 200, data: res })
