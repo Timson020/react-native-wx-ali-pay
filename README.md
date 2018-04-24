@@ -10,7 +10,50 @@ react-native link react-native-wx-ali-pay
 ```
 
 ##  Android
->none
+
+### Step1
+在```android/app/src/main/java/com/xx/ ```下创建```wxapi```文件夹
+
+### Step2
+新建文件 ```WXPayEntryActivity.java```
+```
+package com.xxx.wxapi;
+
+import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
+
+import com.timson.react_native_wx_ali_pay.wxpay.WXPay;
+
+public class WXPayEntryActivity extends Activity{
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        WXPay.handlerIntent(getIntent());
+        finish();
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        setIntent(intent);
+        WXPay.handlerIntent(intent);
+    }
+}
+```
+
+### Step3
+在```AndroidManifest.xml``` 加上
+```
+<activity
+	android:name=".MainActivity"
+....
+</activity>
+<activity
+	android:name=".wxapi.WXPayEntryActivity"
+	android:exported="true"
+	android:launchMode="singleTop" />
+```
 
 ## iOS
 ### Step1
