@@ -7,28 +7,30 @@ const Pay = {
 	onWxPay,
 }
 
-async function onAliPay(url) {
+function onAliPay(url) {
 	const orderString = url
 	let res = null
 	if (!url) return Promise.resolve({ code: 400, msg: 'illegal string' })
-	try {
-		res = await NativeModules.RNWxAliPay.onAliPay(iOS ? { orderString } : url)
-		return Promise.resolve({ code: 200, data: res })
-	} catch (err) {
-		return Promise.resolve({ code: 400, msg: err })
-	}
+	return new Promise((resolve) => {
+		NativeModules.RNWxAliPay.onAliPay(iOS ? { orderString } : url).then(() => {
+			resolve({ code: 200, data: res })
+		}).catch((err) => {
+			resolve({ code: 400, msg: err })
+		})
+	})
 }
 
-async function onWxPay(wxObj) {
+function onWxPay(wxObj) {
 	let res = null
-	if (!wxObj) Promise.resolve({ code: 400, data: 'illegal object' })
-	iOS ? null : (typeof wxObj.timestamp != 'string' ? wxObj.timestamp.toString() : null )
-	try {
-		res = await NativeModules.RNWxAliPay.onWxPay(wxObj)
-		return Promise.resolve({ code: 200, data: res })
-	} catch (err) {
-		return Promise.resolve({ code: 401, msg: err })
-	}
+	if (!wxObj) return Promise.resolve({ code: 400, data: 'illegal object' })
+	iOS ? null : (typeof wxObj.timestamp != 'string' ? wxObj.timestamp.toString() : null)
+	return new Promise((resolve) => {
+		NativeModules.RNWxAliPay.onWxPay(wxObj).then(d => {
+			resolve({ code: 200, data: d })
+		}).catch(err => {
+			resolve({ code: 400, msg: err })
+		})
+	})
 }
 
 export default Pay
