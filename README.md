@@ -69,7 +69,7 @@ public class WXPayEntryActivity extends Activity{
 在工程target的```Build Settings```-> ```Header Search Paths``` -> 加入```"$(SRCROOT)/../node_modules/react-native-wx-ali-pay/ios/PaySdk"```,并将状态修改为```recursive```
 
 ### Step5
-在工程target的```Info```-> ```URL Types``` -> 点左下角'+'新增一项并将```URL Schemes"```修改为```tessWXPay```
+在工程target的```Info```-> ```URL Types``` -> 点左下角'+'新增一项并将```URL Schemes"```修改为```testWXPay```
 
 #### AppDegelate.m
 >添加文件添加内容 --- 下面的减函数
