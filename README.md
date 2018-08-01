@@ -1,21 +1,54 @@
+![npm](https://img.shields.io/npm/v/react-native-wx-ali-pay.svg)
+![npm](https://img.shields.io/npm/dw/react-native-wx-ali-pay.svg)
+![GitHub issues](https://img.shields.io/github/issues/Timson020/react-native-wx-ali-pay.svg)
+
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/Timson020/react-native-wx-ali-pay.git/pulls)
+![npm](https://img.shields.io/npm/l/react-native-wx-ali-pay.svg)
+
 # react-native-wx-ali-pay
 > react-native版 微信支付，支付宝 插件
-> 本插件基于 [xiaozhicheng/react-native-pay](https://github.com/xiaozhicheng/react-native-pay) 做了bug修补
 
-# Link
+## Install
 
-## CMD
 ```
+npm install react-native-wx-ali-pay -S
+
 react-native link react-native-wx-ali-pay
 ```
 
-##  Android
+## Useage
+```
+import Pay from 'react-native-wx-ali-pay'
 
-### Step1
+const wxObj = {
+  appid: 'appid',
+  partnerid: 'partnerid',
+  noncestr: 'noncestr',
+  timestamp: 'timestamp',
+  prepayid: 'prepayid',
+  package: 'package',
+  sign: 'sign',
+}
+
+const aliObj = {
+  orderString: 'orderString'
+}
+
+Pay.onWxPay(wxObj).then(e => console.info(e)).catch(err => alert(err))
+
+Pay.onAliPay(aliObj).then(e => console.info(e)).catch(err => alert(err))
+```
+
+## StepUp in Java && OC
+
+###  Android
+
+#### Step1
 在```android/app/src/main/java/com/xx/ ```下创建```wxapi```文件夹
 
-### Step2
+#### Step2
 新建文件 ```WXPayEntryActivity.java```
+
 ```
 package com.xxx.wxapi;
 
@@ -42,8 +75,9 @@ public class WXPayEntryActivity extends Activity{
 }
 ```
 
-### Step3
+#### Step3
 在```AndroidManifest.xml``` 加上
+
 ```
 <activity
 	android:name=".MainActivity"
@@ -55,20 +89,21 @@ public class WXPayEntryActivity extends Activity{
 	android:launchMode="singleTop" />
 ```
 
-## iOS
-### Step1
+### iOS
+
+#### Step1
 在工程target的```General``` -> ```Link Frameworks and Libraries``` -> 加入```libsqlite3.tbd, libc++.tbd, libz.tbd```
 
-### Step2
+#### Step2
 在工程target的```General``` -> ```Link Frameworks and Libraries``` -> 加入```AlipaySDK.framework，CoreMotion.framework```(注意: 加入的AlipaySDK.framework需要是插件支付宝文件里的AlipaySDK.framework)
 
-### Step3
+#### Step3
 在工程target的```Build Settings```-> ```Frameworks Search Paths``` -> 加入```"$(SRCROOT)/../node_modules/react-native-wx-ali-pay/ios/PaySdk/支付宝"```
 
-### Step4
+#### Step4
 在工程target的```Build Settings```-> ```Header Search Paths``` -> 加入```"$(SRCROOT)/../node_modules/react-native-wx-ali-pay/ios/PaySdk"```,并将状态修改为```recursive```
 
-### Step5
+#### Step5
 在工程target的```Info```-> ```URL Types``` -> 点左下角'+'新增一项并将```URL Schemes"```修改为```testWXPay```
 
 #### AppDegelate.m
@@ -97,30 +132,7 @@ public class WXPayEntryActivity extends Activity{
 }
 ```
 
-# Useage
-```
-import Pay from 'react-native-wx-ali-pay'
-
-const wxObj = {
-	appid: 'wxc838755f42580832',
-	partnerid: '1494834082',
-	noncestr: 'b8mcefmi0kf38a5g3',
-	timestamp: '1521906649',
-	prepayid: 'wx20180324235049f7cc4eb6260442375925',
-	package: 'Sign=WXPay',
-	sign: '227FF067FE26CA8F8538260D26D9F435',
-}
-
-const aliObj = {
-	orderString: ''
-}
-
-Pay.onWxPay(wxObj).then(e => console.info(e)).catch(err => alert(err))
-
-Pay.onAliPay(aliObj).then(e => console.info(e)).catch(err => alert(err))
-```
-
-#  Contributor
+##  Contributer
 [OYWeijian](https://github.com/OYWeijian)
-<!-- This project exists thanks to all the people who contribute. [[Contribute]](CONTRIBUTING.md). -->
-<!-- ![](https://avatars3.githubusercontent.com/u/15721842?s=460&v=4 OYWeijian) -->
+
+[lekenny](https://github.com/lekenny)
