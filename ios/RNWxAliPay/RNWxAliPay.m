@@ -29,7 +29,7 @@ RCT_EXPORT_METHOD(onAliPay:(NSDictionary *)orderString  resolver:(RCTPromiseReso
     // NOTE: 调用支付结果开始支付
     if (orderStr != nil)    {
         
-        NSString *appScheme = @"testWXPay"; // app中独立的scheme，用于支付宝返回的结果正确跳回商户app
+        NSString *appScheme = @"WXPay"; // app中独立的scheme，用于支付宝返回的结果正确跳回商户app
         
         [[AlipaySDK defaultService] payOrder:orderStr fromScheme:appScheme callback:^(NSDictionary *resultDic) {
             //支付回调
