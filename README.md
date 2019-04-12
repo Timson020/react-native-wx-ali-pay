@@ -1,3 +1,4 @@
+![Travis (.org)](https://img.shields.io/travis/Timson020/react-native-wx-ali-pay.svg)
 ![npm](https://img.shields.io/npm/v/react-native-wx-ali-pay.svg)
 ![npm](https://img.shields.io/npm/dw/react-native-wx-ali-pay.svg)
 ![GitHub issues](https://img.shields.io/github/issues/Timson020/react-native-wx-ali-pay.svg)
